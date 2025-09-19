@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Módulo de pasos</title>
+  <style>
+    :root {
+      --module-background: #1d75ef;
+      --module-text: #ffffff;
+      --module-accent: #8ce4c2;
+      --module-accent-strong: #5cc69f;
+      --module-step-inactive: rgba(255, 255, 255, 0.24);
+      --module-step-text: #1b4e83;
+      font-size: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--module-background);
+      color: var(--module-text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2.5rem 1.5rem;
+    }
+
+    .steps-module {
+      background: linear-gradient(140deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
+      border-radius: 1.5rem;
+      box-shadow: 0 1.5rem 3rem rgba(7, 30, 55, 0.25);
+      padding: 2.5rem;
+      max-width: 540px;
+      width: 100%;
+      backdrop-filter: blur(4px);
+    }
+
+    .steps-eyebrow {
+      font-size: 0.875rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.75);
+      margin-bottom: 1.5rem;
+    }
+
+    .steps-title {
+      font-size: clamp(1.6rem, 3vw + 1rem, 2.75rem);
+      font-weight: 700;
+      margin: 0 0 1.25rem;
+      line-height: 1.2;
+    }
+
+    .steps-title em {
+      color: var(--module-accent);
+      font-style: normal;
+    }
+
+    .steps-description {
+      margin: 0 0 2rem;
+      font-size: 1rem;
+      line-height: 1.55;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .steps-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 999px;
+      background: var(--module-accent);
+      color: var(--module-step-text);
+      font-weight: 700;
+      text-decoration: none;
+      transition: background 250ms ease, transform 250ms ease, box-shadow 250ms ease;
+      box-shadow: 0 1rem 2rem rgba(11, 64, 99, 0.2);
+    }
+
+    .steps-cta:hover,
+    .steps-cta:focus-visible {
+      background: var(--module-accent-strong);
+      transform: translateY(-2px);
+      box-shadow: 0 1.5rem 2.25rem rgba(11, 64, 99, 0.35);
+    }
+
+    .steps-cta:focus-visible {
+      outline: 3px solid rgba(255, 255, 255, 0.55);
+      outline-offset: 3px;
+    }
+
+    .steps-list {
+      margin: 2.5rem 0 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      gap: clamp(1rem, 3vw, 1.5rem);
+    }
+
+    .steps-item {
+      flex: 1;
+    }
+
+    .step-link {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--module-text);
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      transition: color 250ms ease;
+    }
+
+    .step-number {
+      width: 3.25rem;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--module-step-inactive);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--module-text);
+      transition: background 300ms ease, transform 300ms ease, box-shadow 300ms ease;
+    }
+
+    .step-label {
+      opacity: 0;
+      transform: translateY(10px);
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.95rem;
+      transition: opacity 300ms ease, transform 300ms ease;
+      text-align: center;
+      max-width: 8rem;
+    }
+
+    .step-link:hover .step-number,
+    .step-link:focus-visible .step-number {
+      background: var(--module-accent);
+      color: var(--module-step-text);
+      transform: scale(1.1);
+      box-shadow: 0 0.75rem 1.5rem rgba(10, 33, 58, 0.35);
+    }
+
+    .step-link:hover .step-label,
+    .step-link:focus-visible .step-label {
+      opacity: 1;
+      transform: translateY(0);
+      color: var(--module-text);
+    }
+
+    .step-link:focus-visible {
+      outline: none;
+    }
+
+    .step-link:focus-visible::after {
+      content: "";
+      position: absolute;
+      inset: -0.35rem;
+      border-radius: 1.5rem;
+      border: 2px solid rgba(255, 255, 255, 0.7);
+    }
+
+    @media (max-width: 520px) {
+      .steps-module {
+        padding: 2rem;
+      }
+
+      .steps-list {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .step-link {
+        flex-direction: row;
+        gap: 1.25rem;
+      }
+
+      .step-label {
+        max-width: 100%;
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="steps-module">
+    <p class="steps-eyebrow">Proceso recomendado</p>
+    <h2 class="steps-title">
+      ¿Lorem <em>ipsum dolor</em> sit amet lorem ipsum?
+    </h2>
+    <p class="steps-description">
+      Personaliza este texto para describir brevemente el propósito de tu módulo o la secuencia de pasos que seguirán las personas usuarias.
+    </p>
+    <a class="steps-cta" href="https://tu-enlace-destino.com">
+      ¡Ok!
+    </a>
+    <ol class="steps-list">
+      <li class="steps-item">
+        <a class="step-link" href="https://tu-enlace-paso1.com">
+          <span class="step-number">1</span>
+          <span class="step-label">Descubre la situación inicial</span>
+        </a>
+      </li>
+      <li class="steps-item">
+        <a class="step-link" href="https://tu-enlace-paso2.com">
+          <span class="step-number">2</span>
+          <span class="step-label">Define tus prioridades</span>
+        </a>
+      </li>
+      <li class="steps-item">
+        <a class="step-link" href="https://tu-enlace-paso3.com">
+          <span class="step-number">3</span>
+          <span class="step-label">Activa el plan personalizado</span>
+        </a>
+      </li>
+    </ol>
+  </section>
+</body>
+</html>
